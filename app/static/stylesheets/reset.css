@@ -4,7 +4,7 @@ aside, nav, article, figure {
     display: block;  
 }
 
-fieldset, a img, html, body,ul, ul li,ol, ol li, dt,dd,dl, p {
+fieldset, form, input, a img, html, body,ul, ul li,ol, ol li, dt,dd,dl, p {
 	outline:none;
 	border:none;
 	margin:0;

@@ -12,9 +12,18 @@
 	<li id="f_{{ foldman.key }}">
 		<a href="/canvas/{{ foldman.key }}" class="part part_{{ foldman.parts_finished }}" ></a>
 		<div>
-			<p>Skickad till dig av:<br />
-			<img src="http://graph.facebook.com/{{ foldman.previous_part.user.id }}/picture?type=square" width="30" height="30" /> {{ foldman.previous_part.user.name }}</p>
-			<a href="/canvas/{{ foldman.key }}" class="button">Fortsätt rita</a>
+			<p class="sent_by">
+				Skickad till dig av:<br />
+				<a href="{{ foldman.previous_part.user.get_url }}"><img src="http://graph.facebook.com/{{ foldman.previous_part.user.id }}/picture?type=square" width="30" height="30" /> 
+				{{ foldman.previous_part.user.name }}</a>
+			</p>
+			{% ifequal foldman.parts_finished 1 %}
+			<a href="/canvas/{{ foldman.key }}" class="button">Fortsätt rita kroppen</a>
+			{% else %}
+				{% ifequal foldman.parts_finished 2 %}
+			<a href="/canvas/{{ foldman.key }}" class="button">Fortsätt rita benen</a>
+				{% endifequal %}
+			{% endifequal %}
 			<form action="/foldman/decline/{{ foldman.key }}" method="post" class="decline_form">
 				<fieldset>
 					<input type="submit" class="button cancel" value="Avböj" />
@@ -46,20 +55,25 @@
 </nav>
 {% endif %}
 </div>
+
 <aside id="aside">
 	<div id="friendpile">
 		<fb:friendpile max-rows="2" width="390"></fb:friendpile>
 	</div>
-	<h2>Senaste händelser</h2>
 	<div id="fb_activity">
-	<fb:activity site="vikgub.be" width="390" height="300" header="false" font="arial" border_color="#ffffff" recommendations="true"></fb:activity>
+		<fb:activity site="{{ URL }}" width="390" height="200" font="arial" border_color="#aaaaaa" recommendations="true"></fb:activity>
+	</div>
+	<div id="fb_like_box">
+		<fb:like-box profile_id="174693535652" width="390" connections="25" stream="false" header="false"></fb:like-box>
 	</div>
 </aside>
 	
 {% endblock %}
-	{% block sub_content %}
-	<section class="content">
-	{% include "includes/foldmen_list.html" %}
-	</section>
-	{% endblock %}
-	
+
+
+{% block sub_content %}
+<section class="content">
+{% include "includes/foldmen_list.html" %}
+</section>
+{% endblock %}
+

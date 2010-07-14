@@ -10,11 +10,8 @@ from google.appengine.api import images
 from google.appengine.ext import db
 from google.appengine.api import mail
 
-IMAGE_FOLDMAN_WIDTH = 500;
-IMAGE_FOLDMAN_HEIGHT = 730;
-
-IMAGE_FOLDMAN_THUMB_WIDTH = 100;
-IMAGE_FOLDMAN_THUMB_HEIGHT = 146;
+from app.config.config import *
+from app.config.environment import *
 
 IMAGE_PART_HEIGHT = 250;
 IMAGE_FOLDING = 10;
@@ -179,7 +176,7 @@ def set_current_part(foldman):
 	elif foldman.parts_finished == 2:
 		type = 'legs'
 		
-	part = Part.gql("WHERE type = :type AND foldman = :foldman ", foldman=foldman, type=type).get()
+	part = Part.all().filter("foldman =", foldman).filter("type =", type).get()
 	part.current = True
 	part.put()
 	

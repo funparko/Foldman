@@ -187,7 +187,6 @@ var Paint = {
 		clearInterval(Paint.active_interval);
 		$('#cancel_image').val('1');
 		$('#part_form').submit();
-		
 	},
 	cancel : function() {
 		var ok_function = Paint.cancelPaint;

@@ -1,5 +1,3 @@
-var FACEBOOK_APP_ID = '127146497316657'
-
 function checkHasPermission(perms) {
 	var user = FB.getSession();
 	FB.api({

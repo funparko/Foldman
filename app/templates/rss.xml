@@ -2,17 +2,15 @@
 <rss version="2.0">
 	<channel>
 		<title>Vikgubbe</title>
-		<link>http://{{ http_host }}</link>
+		<link>{{ URL }}</link>
 		<description>Senaste vikgubbar</description>
 		{% for foldman in foldmen %}
 		<item>
-			<title>Vikgubbe</title>
-			<link>http://{{ http_host }}/foldman/view/{{ foldman.key }}</link>
-			<guid>http://{{ http_host }}/foldman/view/{{ foldman.key }}</guid>
+			<title>Vikgubbe Nr. {{ foldman.number }}</title>
+			<link>{{ URL }}{{ foldman.get_url }}</link>
+			<guid>{{ URL }}{{ foldman.get_url }}</guid>
 			<description>
-				<p>
-					<a href="http://{{ http_host }}/foldman/view/{{ foldman.key }}"><img src="http://{{ http_host }}/image/foldman_thumb/{{ foldman.key }}" alt="Vikgubbe" /></a>
-				</p>
+				&lt;a href="{{ URL }}{{ foldman.get_url }}"&gt; &lt;img src="{{ URL }}{{ foldman.get_thumb_url }}" alt="Vikgubbe Nr. {{ foldman.number }}" width="{{ IMAGE_FOLDMAN.thumb_width }}" height="{{ IMAGE_FOLDMAN.thumb_height }}" /&gt;&lt;/a&gt;
 			</description>
 			<author>Vikgubbe</author>
 			<pubDate>{{ foldman.finished|date:"D, d M Y H:i:s O" }}</pubDate>

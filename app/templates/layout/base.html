@@ -7,13 +7,17 @@
 	
 	{% block opengraph %}
 	<meta property="og:title" content="Vikgubbe" /> 
-	<meta property="og:image" content="{{ URL }}{{ foldman.get_thumb_url }}" /> 
+	<meta property="og:image" content="{{ URL }}/images/fb.png" /> 
 	<meta property="og:description" content="Rita din egen vikgubbe med dina vänner" /> 
 	{% endblock %}
 	<meta property="og:site_name" content="Vikgubbe" />
 	<meta property="fb:admins" content="878870467"/>
 	
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	
+	<script src="/javascripts/modernizr.js"></script>
+	<script>var FACEBOOK_APP_ID = {{ FACEBOOK_APP_ID }}</script>
+	
 	<link rel="stylesheet" href="/stylesheets/base.css" />
 	
 	<link href="/rss/" type="application/rss+xml" rel="alternate" title="Senaste vikgubbar" />
@@ -23,7 +27,6 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<script src="/javascripts/helpers.js"></script>
 	<script src="/javascripts/facebook.js"></script>
-	<script src="/javascripts/modernizr.js"></script>
 	<script src="/javascripts/paint.js"></script>
 	<script src="/javascripts/init.js"></script>
 
@@ -37,15 +40,18 @@
 			<nav id="menu">
 				<ul>
 			        <li><a href="/">Start</a></li>
-			        <li><a href="/foldman/list">Alla gubbar</a></li>
+			        <li><a href="/about">Så gör man</a></li>
+			        <li><a href="/foldman/list">Alla vikgubbar</a></li>
 			        {% if current_user %}
-			        <li><a href="/user/">Dina gubbar (<span id="num_of_user_foldmen">{{ unviewed_foldmen }}</span>)</a></li>				
+			        <li><a href="/user/">Dina vikgubbar (<span id="num_of_user_foldmen">{{ unviewed_foldmen }}</span>)</a></li>				
 			        {% endif %}
 				</ul>
 			</nav>
 			<div id="user_box">
 				{% if current_user %}
-				<a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square" width="20" height="20" /></a> Hej, {{ current_user.name|escape }}. <a href="#" id="logout">Logga ut</a>
+				<a href="{{ current_user.profile_url }}">
+					<img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square" width="20" height="20" /></a> 
+				Hej, {{ current_user.name|escape }}. <a href="#" id="logout">Logga ut</a>
 				
 			    {% else %}
 				<button id="login" class="button">Logga in</button>

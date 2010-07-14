@@ -6,7 +6,7 @@ class HomeHandler(BaseHandler):
 
 	def get(self):
 		template_values = {
-			'finished_foldmen' : models.Foldman.all().filter('finished != ', None).order('-finished')
+			'finished_foldmen' : models.Foldman.all().filter('finished != ', None).order('-finished').fetch(8)
 		}
 		# foldmen = models.Foldman.all().order('finished').fetch(100)
 		# i = 1

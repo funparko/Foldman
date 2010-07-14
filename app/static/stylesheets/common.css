@@ -1,4 +1,45 @@
 
+/* ---------------------- SENT_BY ----------------------------- */
+#sent_to_user .button {
+	float:left;
+}
+#sent_to_user .decline_form {
+	float:right;
+}
+#sent_to_user .sent_by a:hover {
+	text-decoration:none;
+}
+#sent_to_user .sent_by  {
+	margin:30px 0 20px 0;
+	position:relative;
+	padding:0 0 0 40px;
+	color:#999;
+	line-height:1.5em;
+}
+#sent_to_user .sent_by img {
+	position:absolute;
+	left:0;
+	top:2px;
+	border:1px solid #999;
+}
+#sent_to_user .sent_by a {
+	font-weight:bold;
+	font-size:1.125em;
+}
+/* ---------------------- USER_NAME ----------------------------- */
+.user_image {
+	margin:0 5px 0 0;
+}
+.user_name {
+	font-weight:bold;
+	font-size:1.125em;
+	border-bottom:3px solid #eee;
+	padding:0 0 .5em;
+}
+.user_name a {
+	text-decoration:none;
+}
+
 /* ---------------------- CHOOSE_SENT_LIST ----------------------------- */
 .choose_sent_list .part {
 	float:left;
@@ -25,7 +66,7 @@
 }
 #fb_activity {
 	margin:0 0 20px;
-	height:300px;
+	height:200px;
 }
 /* ---------------------- FINISHED_FOLDMEN ----------------------------- */
 #finished_foldmen {

@@ -11,7 +11,14 @@
 
 {% block content %}
 
+<h1 class="user_name">
+	<a href="{{ current_user.profile_url }}">
+		<img src="http://graph.facebook.com/{{ user.id }}/picture?type=square" width="30" height="30" class="user_image" /> 
+		{{ user.name }}
+	</a>
+</h1>
 <h2>Vikgubbar som {{ user.name }} varit med på</h2>
+<p>Totalt antal vikgubbar: {{ user.foldman_count }}</p>
 <ul class="foldmen_list">
 	{% for foldman in foldmen %}
 	<li>
@@ -21,6 +28,6 @@
 	{% endfor %}
 </ul>
 
-<fb:like href="{{ user.get_url }}" width="500" font="lucida grande"></fb:like>
+<fb:like href="{{ user.get_url }}" width="500" font="arial"></fb:like>
 
 {% endblock %}

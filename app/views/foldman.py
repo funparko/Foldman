@@ -44,8 +44,24 @@ class FoldmanHandler(BaseHandler):
 				self.render(template_values, 'foldmen_view.html')
 			else:
 				self.error(404)
+		
 		elif(action == 'cleanup'):
 			models.unblock_inactive()
+			
+			parts = models.Part.all().fetch(1000)
+			for part in parts:
+				if part.foldman.parts_finished == 1 and part.type == 'head':
+					part.last_finished = True
+				elif part.foldman.parts_finished == 2 and part.type == 'torso':
+					part.last_finished = True
+				else:
+					part.last_finished = False
+				part.put()	
+				#try:
+				#	foldman = part.foldman
+				#except:
+				#	part.delete()
+				
 		else:
 			next = None
 			previous = None

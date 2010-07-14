@@ -81,6 +81,7 @@ body {
 }
 #menu ul li a:hover {
 	background:#f5f9fb;
+	color:#000;
 	text-decoration:none;
 }
 #main {
@@ -132,12 +133,12 @@ form input[type="submit"],
 .button {
 	background: #222 url(/images/alert-overlay.png) repeat-x;
 	display: inline-block;
-	padding: 8px 12px 10px;
+/*	padding: 8px 12px 10px;*/
+	padding: 8px 12px 6px;
 	color: #fff;
 	text-decoration: none;
 	font-weight: bold;
 	font-size:1.25em;
-	line-height: 1;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	-moz-box-shadow: 0 1px 3px #999;
@@ -149,7 +150,8 @@ form input[type="submit"],
 	cursor: pointer;
 }
 form .submit input {
-	padding: 8px 12px 10px;
+/*	padding: 8px 12px 10px;*/
+	padding: 6px 12px 5px;
 }
 form input[type="submit"]:active,
 .cancel:active,
@@ -159,11 +161,12 @@ form input[type="submit"]:active,
 	top:1px;
 }
 
-.button.cancel,
-#cancel_button {
-	float:right;
+.button.cancel  {
 	background:#d93f00;
 	color:#fff;
+}
+#cancel_button {
+	float:right;
 }
 form input[type="submit"]:hover,
 .cancel:hover ,
@@ -196,7 +199,7 @@ input[type="text"]:focus {
 .foldmen_list li {
 	float:left;
 	margin:10px;
-	background: url(/static/images/papers/paper_small_bg.png) no-repeat;
+	background: url(../images/papers/paper_small_bg.png) no-repeat;
 	font-size:0.875em;
 }
 .foldmen_list li a,

@@ -28,11 +28,12 @@ var UI = {
 			
 		});
 		$('#flash_ok_button, #flash_cancel_button').click(function() {
-			$('#flash, #flash_overlay').fadeOut(function() {
-				$(this).remove();
-			});
 			if ($(this).attr('id') == 'flash_ok_button') {
 				return ok_function();
+			} else {
+				$('#flash, #flash_overlay').fadeOut(function() {
+					$(this).remove();
+				});
 			}
 			return false;
 		});
@@ -98,6 +99,7 @@ function init() {
 	// UrlHandler.init();
 	Friends.init();
 	// UrlHandler.loadCurrentUrl();
+	$.preloadImages('/images/layout/ajax-loader.gif');
 }
 
 $(document).ready(init);

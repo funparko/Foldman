@@ -1,10 +1,10 @@
 <div id="finished_foldmen">
-	<h2>Färdiga gubbar</h2>
+	<h2>Färdiga vikgubbar</h2>
 	<ul class="foldmen_list">
 		{% for foldman in finished_foldmen %}
 		<li>
 			<a href="{{ foldman.get_url }}">
-				<img src="{{ foldman.get_thumb_url }}" alt="Vikgubbe Nr. {{ foldman.number }}" width="100" height="146" />
+				<img src="{{ foldman.get_thumb_url }}" alt="Vikgubbe Nr. {{ foldman.number }}" width="{{ IMAGE_FOLDMAN.thumb_width }}" height="{{ IMAGE_FOLDMAN.thumb_height }}" />
 				Vikgubbe <strong>Nr. {{ foldman.number }}</strong>
 			</a>	
 		</li>

@@ -1,4 +1,5 @@
 from app.config.environment import *
+from app.config.config import *
 
 import app.lib.facebook as facebook
 from google.appengine.ext import webapp
@@ -48,9 +49,15 @@ class BaseHandler(webapp.RequestHandler):
 		
 	def render(self, template_values, file):
 		template_values['URL'] = URL
+		template_values['IMAGE_FOLDMAN'] = {
+			'full_width' : IMAGE_FOLDMAN_WIDTH,
+			'full_height' : IMAGE_FOLDMAN_HEIGHT,
+			'thumb_width' : IMAGE_FOLDMAN_THUMB_WIDTH,
+			'thumb_height' : IMAGE_FOLDMAN_THUMB_HEIGHT
+		}
 		template_values['finished'] = models.get_finished(10)
 		template_values['current_user'] = self.current_user
-		template_values['facebook_app_id'] = FACEBOOK_APP_ID
+		template_values['FACEBOOK_APP_ID'] = FACEBOOK_APP_ID
 		
 		if self.current_user:
 			template_values['unviewed_foldmen'] = models.get_users_unviewed_foldmen(self.current_user)

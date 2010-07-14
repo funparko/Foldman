@@ -45,14 +45,14 @@ from google.appengine.ext import webapp
 def main():
 	application = webapp.WSGIApplication(
 	[
-		('^/$|/start', HomeHandler),
+		('^/$|/start|/about/?', HomeHandler),
 		('/canvas/(.*)', CanvasHandler),
 		('/parts/save', CanvasHandler),
 		('/foldman/(.*)/(.*)', FoldmanHandler),
 		('/foldman/(.*)', FoldmanHandler),
 		('/vikgubbe/(.*)', FoldmanHandler),		
 		('/user/(.*)', UserHandler),		
-		('/rss', RssHandler),
+		('/rss/?', RssHandler),
 
 		('/friends/(.*)', FriendsHandler),
 	#	('/json/(.*)', JsonHandler),

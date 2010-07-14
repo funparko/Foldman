@@ -65,6 +65,7 @@ class CanvasHandler(BaseHandler):
 			image = self.request.get('u').replace(' ', '+')
 			image = image[image.find(',') : len(image)]
 			part.full_size_image = base64.b64decode(image)
+			part.last_finished = True
 			part.current = False
 			part.put()
 			
