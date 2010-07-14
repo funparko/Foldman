@@ -26,17 +26,34 @@ body {
 	top:22px;
 	right:0;
 	text-align:right;
-	background:#fff;
+	background:#40a0ce;
 	overflow:hidden;
-	padding:10px 10px 10px 35px;
+	padding:10px 10px 10px 30px;
 	-moz-border-radius:10px;
 	border-radius:10px;
 	height:16px;
 }
+#user_box a {
+	color:#fff;
+}
+#user_menu li {
+	white-space:nowrap;
+}
+#user_menu li {
+	float:left;
+	display:inline;
+	padding:0 8px;
+	border-right:1px solid #fff;
+	font-weight:bold;
+}
+#user_menu li:last-child {
+	border-right:none;
+}
 #user_box img {
 	position:absolute;
 	left:10px;
-	top:8px;
+	top:7px;
+	border:1px solid #fff;
 }
 #container {
 	clear:both;
@@ -141,6 +158,7 @@ form input[type="submit"],
 	font-size:1.25em;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
+	border-radius: 8px;
 	-moz-box-shadow: 0 1px 3px #999;
 	-webkit-box-shadow: 0 1px 3px #999;
 	text-shadow: 0 -1px 1px #222;
@@ -192,7 +210,7 @@ input[type="text"]:focus {
 /* ---------------------- FOLDMEN_LIST ----------------------------- */
 .foldmen_list {
 	width:100%;
-	overflow:hidden;
+	float:left;
 	margin:0 0 0 -3px;
 }
 .foldman_thumb_holder,
@@ -201,6 +219,7 @@ input[type="text"]:focus {
 	margin:10px;
 	background: url(../images/papers/paper_small_bg.png) no-repeat;
 	font-size:0.875em;
+	position:relative;
 }
 .foldmen_list li a,
 .foldmen_list li {
@@ -239,9 +258,30 @@ input[type="text"]:focus {
 .part_2 {background-position: 0 -324px;}
 
 .foldmen_list li {
-	float:left;
 	width:100px;
 	margin:0 5px 10px 5px;
+}
+.foldmen_list li .new{
+	background:#ffde00;
+	font-size:1em;
+	display:block;
+	text-align:center;
+	height:22px;
+	line-height:24px;
+	width:18px;
+	text-transform:uppercase;
+	position:absolute;
+	font-weight:bold;
+	top:-4px;
+	right:-4px;
+	padding:0 2px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	-moz-box-shadow: 0 1px 3px #999;
+	-webkit-box-shadow: 0 1px 3px #999;
+	box-shadow: 0 1px 3px #999;
+	
 }
 #all_list {
 	width:100%;

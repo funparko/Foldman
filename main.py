@@ -33,6 +33,7 @@ from app.views.rss import RssHandler
 from app.views.friends import FriendsHandler
 from app.views.images import ImagesHandler
 from app.views.user import UserHandler
+from app.views.page import PageHandler
 
 
 
@@ -45,7 +46,7 @@ from google.appengine.ext import webapp
 def main():
 	application = webapp.WSGIApplication(
 	[
-		('^/$|/start|/about/?', HomeHandler),
+		('^/$', HomeHandler),
 		('/canvas/(.*)', CanvasHandler),
 		('/parts/save', CanvasHandler),
 		('/foldman/(.*)/(.*)', FoldmanHandler),
@@ -53,7 +54,7 @@ def main():
 		('/vikgubbe/(.*)', FoldmanHandler),		
 		('/user/(.*)', UserHandler),		
 		('/rss/?', RssHandler),
-
+		('/page/(.*)', PageHandler),
 		('/friends/(.*)', FriendsHandler),
 	#	('/json/(.*)', JsonHandler),
 		('/image/(.*)/(.*)', ImagesHandler)
