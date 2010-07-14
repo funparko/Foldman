@@ -7,17 +7,17 @@ api_version: 1
 
 handlers:
 - url: /javascripts
-  static_dir: static/javascripts
+  static_dir: app/static/javascripts
   
 - url: /stylesheets
-  static_dir: static/stylesheets
+  static_dir: app/static/stylesheets
   
 - url: /images
-  static_dir: static/images
+  static_dir: app/static/images
   
 - url: /favicon.ico
-  static_files: static/favicon.ico
-  upload: static/favicon.ico
+  static_files: app/static/favicon.ico
+  upload: app/static/favicon.ico
 
 - url: /admin/.*
   script: admin.py
