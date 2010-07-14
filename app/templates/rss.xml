@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>Vikgubbe</title>
+		<link>http://{{ http_host }}</link>
+		<description>Senaste vikgubbar</description>
+		{% for foldman in foldmen %}
+		<item>
+			<title>Vikgubbe</title>
+			<link>http://{{ http_host }}/foldman/view/{{ foldman.key }}</link>
+			<guid>http://{{ http_host }}/foldman/view/{{ foldman.key }}</guid>
+			<description>
+				<p>
+					<a href="http://{{ http_host }}/foldman/view/{{ foldman.key }}"><img src="http://{{ http_host }}/image/foldman_thumb/{{ foldman.key }}" alt="Vikgubbe" /></a>
+				</p>
+			</description>
+			<author>Vikgubbe</author>
+			<pubDate>{{ foldman.finished|date:"D, d M Y H:i:s O" }}</pubDate>
+		</item>
+		{% endfor %}
+	</channel>
+</rss>

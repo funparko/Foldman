@@ -1,0 +1,72 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div id="main">
+	<div id="tools">
+		<ul id="tool_type">
+			<li class="tool_pencil" rel="pencil">Pencil</li>
+			<li class="tool_eraser"rel="eraser">Eraser</li>
+		</ul>
+		<ul id="tool_size">
+			<li class="tool_size_2" rel="2">2</li>
+			<li class="tool_size_4" rel="4">4</li>
+			<li class="tool_size_8" rel="8">8</li>
+			<li class="tool_size_12" rel="12">12</li>
+			<li class="tool_size_16" rel="16">16</li>
+		</ul>
+	</div>
+	<div id="action_area">
+		<div id="paint_area_container">
+			<canvas id="paint_area" width="500" height="250">
+		    	<p>Unfortunately, your browser is currently unsupported by our web 
+		    		application.  We are sorry for the inconvenience. Please use one of the 
+		    		supported browsers listed below, or draw the image you want using an 
+					offline tool.</p>
+			    <p>Supported browsers: <a href="http://www.opera.com">Opera</a>, <a 
+			      href="http://www.mozilla.com">Firefox</a>, <a 
+			      href="http://www.apple.com/safari">Safari</a>, and <a 
+			      href="http://www.konqueror.org">Konqueror</a>.</p>
+		  </canvas>
+		</div>
+		<form id="part_form" method="post" action="/parts/save">
+			<fieldset>
+				{% ifnotequal part.type 'head' %}
+				<input type="hidden" name="previous_image" value="/image/part/{{ part.prev_part.key }}" id="previous_image" />
+				{% endifnotequal %}
+				<input type="hidden" name="u" value="" id="part_image" />
+				<input type="hidden" name="cancel" value="" id="cancel_image" />
+				<input type="hidden" name="type" value="{{ part.type }}" id="part_type" />
+				<input type="hidden" name="part_id" value="{{ part.key }}" id="part_id" />		
+				<input type="hidden" name="foldman_id" value="{{ part.foldman.key }}" id="foldman_id" />		
+				<div class="submit"><input type="submit" name="cancel" id="cancel_button" value="Avbryt" /></div>		
+				<div class="submit"><input type="submit" name="save" id="done_button" value="Klar" /></div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+<aside id="aside">
+	<div class="holder">
+		<span class="part_{{ part.type }}" id="do_part_type">{{ part.type }}</span>
+		{% ifequal part.type 'head' %}
+			<h2>Rita huvudet på gubben</h2>
+			<p>Du ska rita första delen av vikgubben, huvudet. Rita så att halsen precis börjar längst ner på ritytan</p>
+			<p><strong>Tänk på att rita ända ner till botten</strong> så nästa person ser vad denne ska börja på kroppen.</p>
+			<p>När du färdig tryck på klar.</p>
+		{% endifequal %}
+		{% ifequal part.type 'torso' %}
+			<h2>Rita kroppen på gubben</h2>
+			<p>Du ska rita andra delen på denna vikgubbe, kroppen. Rita så att benen precis börjar längst ner på ritytan</p>
+			<p><strong>Tänk på att rita ända ner till botten</strong> så nästa person ser vad denne ska börja på benen.</p>
+			<p>När du färdig tryck på klar</p>
+		{% endifequal %}
+		{% ifequal part.type 'legs' %}
+			<h2>Rita ben på gubben</h2>
+			<p>Du ska rita sista delen på denna vikgubbe, benen.</p>
+			<p>När du färdig tryck på klar för att se hur vikgubben blev.</p>
+		{% endifequal %}
+		
+		
+	</div>
+</aside>
+{% endblock %}

@@ -1,0 +1,196 @@
+
+/* ---------------------- CHOOSE_SENT_LIST ----------------------------- */
+.choose_sent_list .part {
+	float:left;
+	margin:0 10px 0 0;
+}
+.choose_sent_list div{
+	float:left;
+	width:340px;
+}
+.choose_sent_list li {
+	clear:both;
+	overflow:hidden;
+	border-bottom:3px solid #dff0f7;
+	padding:0 0 5px;
+	margin:0 0 5px;
+}
+.choose_sent_list li:last-child {
+	border-bottom:none;
+	margin:0;
+}
+/* ---------------------- INDEX ----------------------------- */
+#friendpile {
+	margin:0 0 20px;
+}
+#fb_activity {
+	margin:0 0 20px;
+	height:300px;
+}
+/* ---------------------- FINISHED_FOLDMEN ----------------------------- */
+#finished_foldmen {
+	clear:both;
+}
+.view_all {
+	font-weight:bold;
+	padding-left:5px;
+	margin:0;
+}
+/* ---------------------- VIEW_FOLDMAN ----------------------------- */
+#foldman_info a {
+	color:#000;
+}
+#foldman_times {
+	clear:both;
+	margin:0 0 10px 10px;
+}
+#foldman_times dd,
+#foldman_times dt {
+	display:inline;
+}
+#foldman_times dt {
+	font-weight:bold;
+}
+#foldman_times dd {
+	padding-right:10px;
+}
+.foldman_holder {
+	background: #fff url(../images/papers/full.png) no-repeat 0 0;
+	width:500px;
+	height:740px;
+	padding:10px 5px 0 5px;
+	margin:-10px 0 0 -5px;
+}
+.foldman_holder img{
+	display:block;
+}
+.foldman_users {
+	margin:10px 10px 0 0;
+	float:left;
+	width:230px;
+}
+.foldman_users img {
+	border:1px solid #40a0ce;
+	width:30px;
+	height:30px;
+	margin:0 5px 0 0;
+}
+.foldman_users li {
+	padding:5px 0 0 0;
+	height:42px;
+	line-height:38px;
+	border-bottom:1px dotted #40a0ce;
+}
+.foldman_users li:last-child {
+	border-bottom:none;
+}
+.foldman_users li img {
+	vertical-align:middle;
+}
+
+
+/* ---------------------- CHOOSE_FRIEND_LIST ----------------------------- */
+#choose_friend_list img {
+	border:1px solid #ccc;
+}
+#choose_friend {
+	overflow:auto;
+	padding:10px 0 0 0;
+	margin: 0 0 10px;
+	max-height:400px;
+}
+#choose_friend_list li {
+	padding:2px;
+}
+#choose_friend_list li label{
+	cursor:pointer;
+}
+#choose_friend_list li:nth-child(even) {
+	background:#fff;
+}
+#choose_friend_list li img {
+	vertical-align:middle;
+	margin:0 2px 0;
+}
+#search_friends_holder {
+	background:#40a0ce;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	padding:10px;
+	margin:0 0 0;
+	color:#fff;
+	font-weight:bold;
+}
+#search_friends_holder label {
+	padding:0 5px 0 0;
+}
+#search_friends_holder input {
+	width:300px;
+	font-size:1.25em;
+}
+/* ---------------------- FLASH ----------------------------- */
+#flash {
+	padding:20px;
+	position:absolute;
+	width:400px;
+	background:#000;
+	opacity:0.9;
+	color:#fff;
+	z-index:200;
+	top:50%;
+	left:50%;
+	margin-left:-200px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	-moz-box-shadow: #999 5px 5px 20px; 
+	-webkit-box-shadow: #999 5px 5px 20px;
+}
+#flash div {
+	border-bottom:1px solid #fff;
+	margin:0 0 5px;
+	padding:0 0 5px;
+}
+#flash button {
+	float:right;
+	padding:5px 10px;
+	background:#000;
+	color:#fff;
+	font-weight:bold;
+	border:1px solid #fff;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	cursor:pointer;
+}
+#flash #flash_cancel_button {
+	float:left;
+}
+#loader {
+	display:block;
+	width:16px;
+	height:16px;
+	float:left;
+	margin:0 6px 0 0;
+	background: url(../images/layout/ajax-loader.gif) no-repeat;
+}
+#flash button:hover {
+	background:#fff;
+	color:#000;
+	border:1px solid #ccc;
+}
+
+#flash_overlay,
+#overlay {
+	position:absolute;
+	height:100%;
+	width:100%;
+	background:#000;
+	opacity:0.9;
+	z-index:100;
+	top:0;
+	left:0;
+	min-height:770px;
+}
+#flash_overlay {
+	background:#fff;
+}
+

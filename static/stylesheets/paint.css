@@ -1,0 +1,96 @@
+/* ---------------------- CANVAS ----------------------------- */
+#tools  {
+	width:496px;
+	margin:0 0 0 5px;
+	background:#eee;
+	overflow:hidden;
+	padding:2px;
+}
+#tools ul {
+	float:left;
+	height:24px;
+	border-right:1px solid #666;
+	padding:0 5px 0 0;
+	margin:0 5px 0 0;
+}
+#tools ul:last-child {
+	border-right:none;
+}
+#tools ul li {
+	float:left;
+	width:22px;
+	height:22px;
+	border:1px outset #ccc;
+	text-indent:-10000px;
+	margin-right:3px;
+	cursor:pointer;
+}
+#tools ul li a{
+	display:block;
+	width:22px;
+	height:22px;
+}
+#tools ul li.selected {
+	background-color:#fff;
+	border:1px inset #ccc;
+}
+#tools ul li:last-child {
+	margin-right:0;
+}
+.tool_pencil,
+.tool_eraser ,
+.tool_size_2 ,
+.tool_size_4 ,
+.tool_size_8 ,
+.tool_size_12,
+.tool_size_16 {
+	background:url(../images/canvas/tools.png) no-repeat;
+}
+
+.tool_pencil {background-position:0 0;}
+.tool_eraser {background-position:0 -22px;}
+.tool_size_16 {background-position:0 -44px;}
+.tool_size_12 {background-position:0 -66px;}
+.tool_size_8 {background-position:0 -88px;}
+.tool_size_4 {background-position:0 -110px;}
+.tool_size_2 {background-position:0 -132px;}
+
+#canvas_area {
+	height:400px;
+}
+#do_part_type {
+	text-indent:-10000px;
+	display:block;
+	float:right;
+}
+#action_area{
+	position:relative;
+	margin:0 0 20px 0;
+}
+#paint_area_container {
+	position: relative;
+	width:500px;
+	height:258px;
+	margin:0;
+	background: url(../images/canvas/paint_bg.png) no-repeat;
+	padding:0 0 0 5px;
+}
+
+#paint_area {
+	
+}
+#part_form {
+	width:500px;
+	margin:0;
+}
+.cursor_eraser {
+	cursor: url(/static/images/eraser.png), crosshair;
+}
+.cursor_pencil {
+	cursor: crosshair;
+}
+#paint_area_temp { 
+	position: absolute; 
+	top: 0; 
+	left: 5px; 
+}

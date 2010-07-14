@@ -1,0 +1,71 @@
+<!DOCTYPE html>  
+<html lang="sv" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>  
+	<meta charset="utf-8" />
+	<title>{% block title %}Vikgubbe{% endblock %}</title>
+	<meta name="description" content="Rita din egen vikgubbe med dina vänner"/>
+	
+	{% block opengraph %}
+	<meta property="og:title" content="Vikgubbe" /> 
+	<meta property="og:image" content="{{ URL }}{{ foldman.get_thumb_url }}" /> 
+	<meta property="og:description" content="Rita din egen vikgubbe med dina vänner" /> 
+	{% endblock %}
+	<meta property="og:site_name" content="Vikgubbe" />
+	<meta property="fb:admins" content="878870467"/>
+	
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<link rel="stylesheet" href="/stylesheets/base.css" />
+	
+	<link href="/rss/" type="application/rss+xml" rel="alternate" title="Senaste vikgubbar" />
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="/javascripts/helpers.js"></script>
+	<script src="/javascripts/facebook.js"></script>
+	<script src="/javascripts/modernizr.js"></script>
+	<script src="/javascripts/paint.js"></script>
+	<script src="/javascripts/init.js"></script>
+
+
+ 
+</head>
+<body>
+	<div id="container">
+		<header id="header">
+			<strong id="logo"><a href="/"><span>Vikgubbe</span></a></strong>
+			<nav id="menu">
+				<ul>
+			        <li><a href="/">Start</a></li>
+			        <li><a href="/foldman/list">Alla gubbar</a></li>
+			        {% if current_user %}
+			        <li><a href="/user/">Dina gubbar (<span id="num_of_user_foldmen">{{ unviewed_foldmen }}</span>)</a></li>				
+			        {% endif %}
+				</ul>
+			</nav>
+			<div id="user_box">
+				{% if current_user %}
+				<a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square" width="20" height="20" /></a> Hej, {{ current_user.name|escape }}. <a href="#" id="logout">Logga ut</a>
+				
+			    {% else %}
+				<button id="login" class="button">Logga in</button>
+			    {% endif %}
+			</div>
+		
+		</header>
+	
+		<section class="content">
+				{% block content %}{% endblock %}
+		</section>
+		
+		{% block sub_content %}{% endblock %}
+			
+		<footer>
+			<p>© Vikgubbe 2010</p>
+		</footer>
+	</div>
+	
+    <div id="fb-root"></div>
+	
+</body>
+</html>

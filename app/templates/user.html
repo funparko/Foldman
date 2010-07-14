@@ -1,0 +1,26 @@
+{% extends "layout/base.html" %}
+
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block opengraph %}
+<meta property="og:title" content="{{ user.name }}s vikgubbar" /> 
+<meta property="og:image" content="" /> 
+<meta property="og:description" content="Vikgubbar som {{ user.name }} varit med och ritat" /> 
+<meta property="og:site_name" content="Vikgubbe" />
+{% endblock %}
+
+{% block content %}
+
+<h2>Vikgubbar som {{ user.name }} varit med på</h2>
+<ul class="foldmen_list">
+	{% for foldman in foldmen %}
+	<li>
+		<a href="{{ foldman.get_url }}"><img src="{{ foldman.get_thumb_url }}" alt="Vikgubbe"  width="100" height="146" /></a>
+		{% if foldman.unviewed %}Ny!{% endif %}
+	</li>
+	{% endfor %}
+</ul>
+
+<fb:like href="{{ user.get_url }}" width="500" font="lucida grande"></fb:like>
+
+{% endblock %}

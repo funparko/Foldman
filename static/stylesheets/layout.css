@@ -1,0 +1,289 @@
+body {
+	background:#d4eaf5;
+	padding:0 0 30px;
+}
+#header {
+	position:relative;
+	height:80px;
+}
+#logo {
+	position:absolute;
+	background:url(../images/layout/logo.png) no-repeat;
+	top:10px;
+	left:0;
+}
+#logo a {
+	text-indent:-10000px;
+}
+#logo,
+#logo a{
+	display:block;
+	width:183px;
+	height:50px;
+}
+#user_box {
+	position:absolute;
+	top:22px;
+	right:0;
+	text-align:right;
+	background:#fff;
+	overflow:hidden;
+	padding:10px 10px 10px 35px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	height:16px;
+}
+#user_box img {
+	position:absolute;
+	left:10px;
+	top:8px;
+}
+#container {
+	clear:both;
+	display:block;
+	padding: 0;
+	width:960px;
+	margin:0 auto;
+}
+.content {
+	clear:both;
+	overflow:hidden	;
+	background:#fff;
+	padding:20px 20px 20px;
+	margin: 0 0 20px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+/*	-moz-box-shadow: 3px 3px 13px #40a0ce;
+	-webkit-box-shadow: 3px 3px 13px #40a0ce;
+	box-shadow: 3px 3px 3px #40a0ce;
+*/}
+#menu {
+	position:absolute;
+	top:22px;
+	left:220px;
+	overflow:hidden;
+	margin:0 0 10px;
+}
+#menu ul li {
+	float:left;
+	margin-right:10px;
+}
+#menu ul li a {
+	display:block;
+	padding:10px 15px;
+	background:#fff;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	font-weight:bold;
+	height:16px;
+	cursor:pointer;
+	color:#d93f00;
+}
+#menu ul li a:hover {
+	background:#f5f9fb;
+	text-decoration:none;
+}
+#main {
+	float:left;
+	width:500px;
+}
+#aside {
+	float:right;
+	width:390px;
+	margin:0;
+}
+footer {
+	clear:both;
+	margin:0 auto 10px auto;
+	color:#666;
+	padding-right:10px;
+	text-align:right;
+}
+.box,
+.holder {
+	background:#f5f9fb;
+	border:1px solid #dff0f7;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	
+	overflow:hidden;
+	margin:0 0 20px;
+	padding:15px 10px 10px;
+	
+}
+
+/* ---------------------- CHOOSE ----------------------------- */
+
+nav#choose {
+	height:400px;
+}
+#choose_list {
+	text-align:center;
+	margin:0 auto;
+}
+.choose_list li {
+	float:left;
+}
+nav#choose li:hover {
+}
+
+/* ---------------------- BUTTONS ----------------------------- */
+form input[type="submit"],
+.button {
+	background: #222 url(/images/alert-overlay.png) repeat-x;
+	display: inline-block;
+	padding: 8px 12px 10px;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	font-size:1.25em;
+	line-height: 1;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-moz-box-shadow: 0 1px 3px #999;
+	-webkit-box-shadow: 0 1px 3px #999;
+	text-shadow: 0 -1px 1px #222;
+	border:none;
+	border-bottom: 1px solid #222;
+	position: relative;
+	cursor: pointer;
+}
+form .submit input {
+	padding: 8px 12px 10px;
+}
+form input[type="submit"]:active,
+.cancel:active,
+.button:active {
+	-moz-box-shadow: 0 1px 1px #999;
+	-webkit-box-shadow: 0 1px 1px #999;
+	top:1px;
+}
+
+.button.cancel,
+#cancel_button {
+	float:right;
+	background:#d93f00;
+	color:#fff;
+}
+form input[type="submit"]:hover,
+.cancel:hover ,
+.button:hover {
+	background:#666;
+	color:#fff;
+	text-decoration:none;
+}
+input[type="text"] {
+	background:#eee;
+	color:#000;
+	border:1px solid #ccc;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	padding:4px;
+}
+input[type="text"]:focus,
+input[type="text"]:focus {
+	background:#fff;
+	color:#000;
+	border:1px solid #ddd;
+}
+/* ---------------------- FOLDMEN_LIST ----------------------------- */
+.foldmen_list {
+	width:100%;
+	overflow:hidden;
+	margin:0 0 0 -3px;
+}
+.foldman_thumb_holder,
+.foldmen_list li {
+	float:left;
+	margin:10px;
+	background: url(/static/images/papers/paper_small_bg.png) no-repeat;
+	font-size:0.875em;
+}
+.foldmen_list li a,
+.foldmen_list li {
+	width:120px;
+	display:block;
+}
+.foldmen_list li a {
+	color:#999;
+}
+.foldmen_list li a:hover {
+	text-decoration:none;
+}
+.part_0,
+.part_1,
+.part_2,
+.part_3,
+.part_head,
+.part_torso ,
+.part_legs {
+	width:120px;
+	height:160px;
+	display:block;
+	background: url(../images/choose/choose.png) no-repeat 0 0;
+}
+.part_1 ,
+.part_2 ,
+.part_3 {
+	width:120px;	
+}
+	
+.part_1 a,
+.part_torso,
+.part_1 {background-position:0 -162px;}
+.part_legs,
+.part_2  a,
+.part_2 {background-position: 0 -324px;}
+
+.foldmen_list li {
+	float:left;
+	width:100px;
+	margin:0 5px 10px 5px;
+}
+#all_list {
+	width:100%;
+}
+#all_list li {
+	min-width:100px;
+	width:12%;
+	margin:0 0 10px 0;
+}
+#finished {
+	clear:both;
+	float:left;
+	width:100%;
+}
+#show_all {
+	float:right;
+	clear:both;
+}
+#your {
+	float:right;
+	width:49%;
+}
+
+/* ---------------------- TABLE ----------------------------- */
+table {
+	width:100%;
+}
+table th {
+	text-align:left;
+}
+table thead tr {
+	background:#666;
+	color:#fff;
+}
+table tbody tr.odd {
+	background:#eee;
+}
+/* ---------------------- PAGINATION ----------------------------- */
+
+.pagination {
+	clear:both;
+	overflow:hidden;
+}
+.pagination .next {
+	float:right;
+}.pagination .previous {
+	float:left;
+}

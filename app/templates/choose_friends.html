@@ -1,0 +1,59 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Klar{% endblock %}
+
+{% block content %}
+
+<h1>Så där din del på vikgubben är klar!</h1>
+<form action="/friends/{{ foldman.key }}" method="post" id="choose_friend_form">
+	<fieldset id="notification" class="holder">
+		<p>Vill du bli meddelad när vikgubben är klar?</p>
+		<div class="radio">
+			<input type="radio" value="wall" name="notification" id="notification_wall" {% ifequal current_user.default_notification 'wall' %}checked="checked"{% endifequal %} /> 
+			<label for="notification_wall">Ja, posta vikgubben i min Facebook logg</label>
+		</div>
+		<div class="radio">
+			<input type="radio" value="email" name="notification" id="notification_email" {% ifequal current_user.default_notification  'email' %}checked="checked"{% endifequal %}  /> 
+			<label for="notification_email">Ja, skicka ett e-post meddelande</label>
+		</div>
+		<div class="radio">
+			<input type="radio" value="none" name="notification" id="notification_none" {% ifequal current_user.default_notification  'none' %}checked="checked"{% endifequal %}  /> 
+			<label for="notification_none">Nej</label>
+		</div>
+	</fieldset>
+	
+	<h2>Välj vem som ska rita nästa del</h2>
+	<p>Vem ska fortsätta på nästa del på gubben? Välj någon av dina vänner på Facebook eller låt vem som helst fortsätta på vikgubben</p>
+	
+
+
+	<div id="main">
+		<div class="holder">
+			<div id="search_friends_holder">
+				<label for="search_friends">Sök vän</label>
+				<input type="text" name="search" value="" id="search_friends" />
+			</div>
+			<fieldset id="choose_friend">
+				<ul id="choose_friend_list" class="choose_friend_list">
+				{% for friend in friends %}
+				<li id="f_{{ friend.id }}">
+					<input type="radio" value="{{ friend.id }}" name="fb_id" id="friend_id_{{ friend.id }}" /> 
+					<label for="friend_id_{{ friend.id }}">
+						<img src="http://graph.facebook.com/{{ friend.id }}/picture?type=square" alt="{{ friend.name }}" width="20" height="20" />
+						<span class="name">{{ friend.name }}</span>
+					</label>
+				</li>
+				{% endfor %}
+				</ul>
+			</fieldset>
+			<div class="submit"><input type="submit" value="Välj vän" /></div>
+		</div>
+		
+	</div>
+	<div id="aside">
+		<input type="submit" name="skip" value="Låt vem som helst fortsätta" />
+	</div>
+</form>
+
+
+{% endblock %}

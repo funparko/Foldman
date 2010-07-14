@@ -1,0 +1,4 @@
+cron:
+- description: unblock foldmen
+  url: /foldman/cleanup
+  schedule: every 2 minutes

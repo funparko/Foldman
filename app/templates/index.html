@@ -1,0 +1,65 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div id="main">
+{% if current_user %}
+
+{% if users_foldmen %}
+<nav class="holder" id="sent_to_user">
+	<h2>Fortsätt rita på en gubbe som en vän börjat på:</h2>
+	<ul class="choose_sent_list">
+	{% for foldman in users_foldmen %}
+	<li id="f_{{ foldman.key }}">
+		<a href="/canvas/{{ foldman.key }}" class="part part_{{ foldman.parts_finished }}" ></a>
+		<div>
+			<p>Skickad till dig av:<br />
+			<img src="http://graph.facebook.com/{{ foldman.previous_part.user.id }}/picture?type=square" width="30" height="30" /> {{ foldman.previous_part.user.name }}</p>
+			<a href="/canvas/{{ foldman.key }}" class="button">Fortsätt rita</a>
+			<form action="/foldman/decline/{{ foldman.key }}" method="post" class="decline_form">
+				<fieldset>
+					<input type="submit" class="button cancel" value="Avböj" />
+				</fieldset>
+			</form>
+		</div>
+	</li>
+	{% endfor %}
+	</ul>
+</nav>
+{% endif %}
+
+<p>
+	<a href="/canvas/new" class="button">Skapa en ny vikgubbe</a>
+</p>
+
+{% endif %}
+
+{% if availble_foldmen %}
+<nav class="choose">
+	<h2>Forsätt på en påbörjad gubbe</h2>
+	<ul class="choose_list">
+	{% for foldman in availble_foldmen %}
+	<li id="f_{{ foldman.key }}">
+		<a href="/canvas/{{ foldman.key }}" class="part_{{ foldman.parts_finished }}" ></a>
+	</li>
+	{% endfor %}
+	</ul>
+</nav>
+{% endif %}
+</div>
+<aside id="aside">
+	<div id="friendpile">
+		<fb:friendpile max-rows="2" width="390"></fb:friendpile>
+	</div>
+	<h2>Senaste händelser</h2>
+	<div id="fb_activity">
+	<fb:activity site="vikgub.be" width="390" height="300" header="false" font="arial" border_color="#ffffff" recommendations="true"></fb:activity>
+	</div>
+</aside>
+	
+{% endblock %}
+	{% block sub_content %}
+	<section class="content">
+	{% include "includes/foldmen_list.html" %}
+	</section>
+	{% endblock %}
+	

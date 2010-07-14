@@ -1,0 +1,90 @@
+<!DOCTYPE html>  
+<html lang="sv">  
+<head>  
+	<meta charset="utf-8" />
+	<title>Vikgubbe - Admin</title>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+	
+	<link rel="stylesheet" href="/static/stylesheets/base.css" />
+ 
+</head>
+<body>
+	<section id="container">
+	<header>
+		<strong id="logo"><a href="#/"><span>Vikgubbe</span></a></strong>
+		<nav>
+			<ul id="menu">
+				<li><a href="/">Start</a></li>
+				{% if not user %}
+				<li><a href="/user/login">Logga in med Google konto</a></li>
+				{% else %}
+				<li><a href="/home/foldmen">Dina gubbar (<span id="num_of_user_foldmen">{{ unviewed_foldmen }}</span>)</a></li>
+					{% if is_admin %}
+				<li><a href="/admin/" rel="no_ajax">Admin</a></li>
+					{% endif %}
+				
+				<li>Inloggad: {{ user_nickname }}</li>
+				<li><a href="{{ logout_url }}" rel="no_ajax">Logga ut</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</header>
+	
+	<section id="content">
+		<h2>Färdiga gubbar</h2>
+		<p>
+			{% if has_prev %}
+			<a href="/admin/list/{{ prev_page }}" class="prev">Föregående</a>
+			{% endif %}
+			{% if has_next %}	
+			<a href="/admin/list/{{ next_page }}" class="next">Nästa</a>
+			{% endif %}	
+		</p>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Skapad</th>
+					<th>Färdig</th>
+					<th>Delar klara</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for foldman in foldmen %}
+		    	<tr class="{% cycle odd,even %}">
+					<td>
+						<a href="/foldman/view/{{ foldman.key }}"><img src="/image/foldman_thumb/{{ foldman.key }}" alt="Vikgubbe" /></a></td>
+					<td>{{ foldman.created|date:"Y-m-d H:i:s" }}</td>
+					<td>{{ foldman.finished|date:"Y-m-d H:i:s" }}</td>
+					<td>{{ foldman.parts_finished }}</td>
+					<td>
+						<form action="/admin/delete/{{ foldman.key }}/" method="post">
+							<fieldset>
+								<div class="submit">
+									<input type="submit" value="Radera" />
+								</div>
+							</fieldset>
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		<p>
+			{% if has_prev %}
+			<a href="/admin/list/{{ prev_page }}" class="prev">Föregående</a>
+			{% endif %}
+			{% if has_next %}	
+			<a href="/admin/list/{{ next_page }}" class="next">Nästa</a>
+			{% endif %}	
+		</p>
+	</section>
+
+	<footer>
+		<p>© Vikgubbe 2009</p>
+	</footer>
+	</section>
+</body>
+</html>

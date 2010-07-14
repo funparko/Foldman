@@ -1,0 +1,27 @@
+body {
+	font-family:helvetica,arial,sans-serif;
+	color:#333;
+	font-size: 75%;
+	line-height:1.4em;
+}
+input, textarea{
+	font-family:helvetica,arial,sans-serif;
+	font-size: 1.0em;
+	line-height:1.4em;
+}
+
+h1 {
+	margin: 0 0 1em;
+}
+h2 {
+	margin: 0 0 1em;
+	color:#d93f00;
+}
+a {
+	text-decoration:none;
+	color:#40a0ce;
+}
+a:hover {
+	text-decoration:underline;
+	color:#000;
+}

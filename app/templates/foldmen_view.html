@@ -1,0 +1,46 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Vikgubbe Nr. {{ foldman.number }}{% endblock %}
+
+{% block opengraph %}
+<meta property="og:title" content="Vikgubbe Nr. {{ foldman.number }}" /> 
+<meta property="og:image" content="{{ URL }}{{ foldman.get_thumb_url }}" /> 
+<meta property="og:description" content="Färdig vikgubbe" /> 
+<meta property="og:site_name" content="Vikgubbe" />
+{% endblock %}
+
+
+{% block content %}
+
+<article id="view_foldman">
+	<div id="main">
+		<div class="foldman_holder">
+			<img src="{{ foldman.get_image_url }}" alt="Vikgubbe"  width="500" height="730" />
+		</div>
+	</div>
+	<aside id="aside">
+		<div class="box" id="foldman_info">
+			<div class="foldman_thumb_holder">
+				<img src="{{ foldman.get_thumb_url }}" alt="Vikgubbe"  width="100" height="146" />
+			</div>
+			<ul class="foldman_users">
+			{% for part in parts %}
+				<li>
+					<a href="{{ part.user.get_url }}">
+					<img src="http://graph.facebook.com/{{ part.user.id }}/picture?type=square" alt="{{ part.user.name }}" />
+					{{ part.user.name }}
+					</a>
+				</li>
+			{% endfor %}
+			</ul>
+			<dl id="foldman_times">
+				<dt>Skapad:</dt>
+				<dd>{{ foldman.created|timesince }}</dd>
+				<dt>Klar:</dt>
+				<dd>{{ foldman.finished|timesince }}</dd>
+			</dl>
+		</div>
+		<fb:comments xid="foldman_{{ foldman.key }}" width="390"></fb:comments>
+	</aside>
+</article>
+{% endblock %}
