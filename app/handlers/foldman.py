@@ -5,7 +5,7 @@ from base import BaseHandler
 import app.models as models
 import logging
 		
-PAGESIZE = 24
+
 class FoldmanHandler(BaseHandler):
 
 	def post(self, action, key):
@@ -35,11 +35,9 @@ class FoldmanHandler(BaseHandler):
 				}
 				
 				if self.current_user:
-					parts = models.Part.all().filter('foldman = ', foldman).filter('user = ', self.current_user)
-					if parts:
-						for part in parts:
-							part.viewed = True
-							part.put()
+					if self.current_user.id in foldman.not_viewed_fb_uids:
+						foldman.not_viewed_fb_uids.remove(self.current_user.id) 
+						foldman.put()
 				
 				self.render(template_values, 'foldmen_view.html')
 			else:
@@ -47,53 +45,47 @@ class FoldmanHandler(BaseHandler):
 		
 		elif(action == 'cleanup'):
 			models.unblock_inactive()
+			# foldmen = models.Foldman.all().fetch(1000)
+			# for f in foldmen:
+			# 	if len(f.not_viewed_fb_uids) < 2:
+			# 		f.not_viewed_fb_uids = []
+			# 		f.put()
+			# 
 			
-			parts = models.Part.all().fetch(1000)
-			for part in parts:
-				if part.foldman.parts_finished == 1 and part.type == 'head':
-					part.last_finished = True
-				elif part.foldman.parts_finished == 2 and part.type == 'torso':
-					part.last_finished = True
-				else:
-					part.last_finished = False
-				part.put()	
+			# foldmen = models.Foldman.all().fetch(1000)
+			# for f in foldmen:
+			# 	ids = []
+			# 	parts = models.Part.all().filter('foldman = ', f)
+			# 	for p in parts:
+			# 		if p.fb_uid and p.fb_uid not in ids:
+			# 			ids.append(str(p.fb_uid))
+			# 			# self.response.out.write(p.fb_uid)
+			# 			# self.response.out.write("\n")
+			# 		
+			# 	# self.response.out.write(ids)
+			# 	f.parts_fb_uids = (ids)
+			# 	f.put()
+			# 
+			# self.response.out.write("1")
+
+
+			# parts = models.Part.all().fetch(1000)
+			# for part in parts:
+			# 	if part.foldman.parts_finished == 1 and part.type == 'head':
+			# 		part.last_finished = True
+			# 	elif part.foldman.parts_finished == 2 and part.type == 'torso':
+			# 		part.last_finished = True
+			# 	else:
+			# 		part.last_finished = False
+			# 	part.put()	
 				#try:
 				#	foldman = part.foldman
 				#except:
 				#	part.delete()
 				
 		else:
-			next = None
-			previous = None
-			after = self.request.get("after")
-			before = self.request.get("before")
-			
-			query = models.Foldman.all().filter('number !=', None)
-			if after or before:						
-				if after:
-					foldmen = query.filter('number <=', int(after)).order("-number").fetch(PAGESIZE+1)
-				elif before:
-					foldmen = query.filter('number >=', int(before)).order("number").fetch(PAGESIZE+1)
-					foldmen.reverse()
-				
-				max_number_foldman = models.Foldman.all().order("-number").get()
-				if max_number_foldman and max_number_foldman.number != foldmen[0].number:
-					previous = True
-			
-			else:
-				foldmen = query.order("-number").fetch(PAGESIZE+1)
-
-			if len(foldmen) == PAGESIZE+1:
-				next = foldmen[-1].number
-				foldmen = foldmen[:PAGESIZE]
 					
-			template_values = {
-				'next': next,
-				'previous': previous,
-				'before': before,
-				'paginate': True,
-				'finished_foldmen': foldmen
-			}
+			template_values = models.get_paginated_foldmen(self)
 			self.render(template_values, 'foldmen_list.html')
 			
 			# if key:

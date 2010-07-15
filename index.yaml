@@ -41,6 +41,17 @@ indexes:
 
 - kind: Foldman
   properties:
+  - name: parts_fb_uids
+  - name: number
+
+- kind: Foldman
+  properties:
+  - name: parts_fb_uids
+  - name: number
+    direction: desc
+
+- kind: Foldman
+  properties:
   - name: parts_finished
   - name: created
 
@@ -49,6 +60,11 @@ indexes:
   - name: parts_finished
   - name: finished
     direction: desc
+
+- kind: Foldman
+  properties:
+  - name: parts_finished
+  - name: parts_fb_uids
 
 - kind: Part
   properties:

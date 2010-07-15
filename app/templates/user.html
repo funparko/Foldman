@@ -19,14 +19,7 @@
 </h1>
 <h2>Vikgubbar som {{ user.name }} varit med på</h2>
 <p>Totalt antal vikgubbar: <strong>{{ user.foldman_count }}</strong></p>
-<ul class="foldmen_list">
-	{% for foldman in foldmen %}
-	<li>
-		<a href="{{ foldman.get_url }}"><img src="{{ foldman.get_thumb_url }}" alt="Vikgubbe"  width="100" height="146" /></a>
-		{% if foldman.unviewed %}<span class="new">Ny</span>{% endif %}
-	</li>
-	{% endfor %}
-</ul>
+{% include "includes/foldmen_list.html" %}
 
 <fb:like href="{{ user.get_url }}" width="500" font="arial"></fb:like>
 

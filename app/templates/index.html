@@ -36,30 +36,52 @@
 </nav>
 {% endif %}
 
-<p>
-	<a href="/canvas/new" class="button">Skapa en ny vikgubbe</a>
-</p>
-
-{% endif %}
+<div id="start_new" class="holder">
+	<p><a href="/canvas/new" class="button">Starta en ny vikgubbe</a></p>
+	<p>
+		Börjar rita huvudet på en ny vikgubbe
+	</p>
+	
+</div>
 
 {% if availble_foldmen %}
-<nav class="choose">
+<nav id="choose_availble" class="holder">
 	<h2>Forsätt på en påbörjad gubbe</h2>
+	<p>Välj en av vikgubbarna nedan för att fortsätta på en påbörjad.</p>
 	<ul class="choose_list">
 	{% for foldman in availble_foldmen %}
 	<li id="f_{{ foldman.key }}">
 		<a href="/canvas/{{ foldman.key }}" class="part_{{ foldman.parts_finished }}" ></a>
+		
+		{% ifequal foldman.parts_finished 1 %}
+		<a href="/canvas/{{ foldman.key }}" class="button">Rita kroppen</a>
+		{% else %}
+			{% ifequal foldman.parts_finished 2 %}
+		<a href="/canvas/{{ foldman.key }}" class="button">Rita benen</a>
+			{% endifequal %}
+		{% endifequal %}
+		
 	</li>
 	{% endfor %}
 	</ul>
 </nav>
 {% endif %}
+
+{% else %}
+<div class="holder">
+	<p>Klicka på knappen för logga in med ditt Facebook-konto och komma igång</p>
+	<a href="#" class="login button">Logga in</a>
+</div>
+{% endif %}
+
 </div>
 
 <aside id="aside">
+	{% comment %}
 	<div id="friendpile">
 		<fb:friendpile max-rows="2" width="390"></fb:friendpile>
 	</div>
+	{% endcomment %}
 	<div id="fb_activity">
 		<fb:activity site="{{ URL }}" width="390" height="200" font="arial" border_color="#aaaaaa" recommendations="true"></fb:activity>
 	</div>

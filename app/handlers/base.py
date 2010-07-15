@@ -32,13 +32,19 @@ class BaseHandler(webapp.RequestHandler):
 				user = User.get_by_key_name(cookie["uid"])
 				if not user:
 					graph = facebook.GraphAPI(cookie["access_token"])
-					profile = graph.get_object("me")
+					try:
+						profile = graph.get_object("me")
+					except GraphAPIError:
+						return None
+					except:
+						return None
+					
 					user = models.User(key_name=str(profile["id"]),
-								id=str(profile["id"]),
-								name=profile["name"],
-								profile_url=profile["link"],
-								email=profile["email"],
-								access_token=cookie["access_token"])
+							id=str(profile["id"]),
+							name=profile["name"],
+							profile_url=profile["link"],
+							email=profile["email"],
+							access_token=cookie["access_token"])
 					user.put()
 				elif user.access_token != cookie["access_token"]:
 					user.access_token = cookie["access_token"]
@@ -48,6 +54,8 @@ class BaseHandler(webapp.RequestHandler):
 		return self._current_user
 		
 	def render(self, template_values, file):
+		template_values['FACEBOOK_APP_ID'] = FACEBOOK_APP_ID
+		template_values['DEBUG'] = DEBUG
 		template_values['URL'] = URL
 		template_values['IMAGE_FOLDMAN'] = {
 			'full_width' : IMAGE_FOLDMAN_WIDTH,
@@ -55,9 +63,9 @@ class BaseHandler(webapp.RequestHandler):
 			'thumb_width' : IMAGE_FOLDMAN_THUMB_WIDTH,
 			'thumb_height' : IMAGE_FOLDMAN_THUMB_HEIGHT
 		}
+		
 		template_values['finished'] = models.get_finished(10)
 		template_values['current_user'] = self.current_user
-		template_values['FACEBOOK_APP_ID'] = FACEBOOK_APP_ID
 		
 		if self.current_user:
 			template_values['unviewed_foldmen'] = models.get_users_unviewed_foldmen(self.current_user)

@@ -29,9 +29,10 @@
 	<script src="/javascripts/facebook.js"></script>
 	<script src="/javascripts/paint.js"></script>
 	<script src="/javascripts/init.js"></script>
-
-
- 
+	
+	{% if not DEBUG %}
+	<script src="/javascripts/analytics.js"></script>	
+	{% endif %}
 </head>
 <body>
 	<div id="container">
@@ -55,7 +56,7 @@
 						<li><a href="#" id="logout">Logga ut</a></li>
 					</ul>
 			    {% else %}
-				<button id="login" class="button">Logga in</button>
+				<a href="#" class="login">Logga in</a>
 			    {% endif %}
 			</div>
 		
@@ -73,6 +74,6 @@
 	</div>
 	
     <div id="fb-root"></div>
-	
+
 </body>
 </html>

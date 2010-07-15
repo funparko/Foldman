@@ -23,22 +23,17 @@
 import wsgiref.handlers
 import os
 import sys
-
-from app.views import *
-from app.views.base import BaseHandler
-from app.views.home import HomeHandler
-from app.views.canvas import CanvasHandler
-from app.views.foldman import FoldmanHandler
-from app.views.rss import RssHandler
-from app.views.friends import FriendsHandler
-from app.views.images import ImagesHandler
-from app.views.user import UserHandler
-from app.views.page import PageHandler
-
-
-
 import cgi
 
+from app.handlers.base import BaseHandler
+from app.handlers.home import HomeHandler
+from app.handlers.canvas import CanvasHandler
+from app.handlers.foldman import FoldmanHandler
+from app.handlers.rss import RssHandler
+from app.handlers.friends import FriendsHandler
+from app.handlers.images import ImagesHandler
+from app.handlers.user import UserHandler
+from app.handlers.page import PageHandler
 
 from google.appengine.ext import webapp
 

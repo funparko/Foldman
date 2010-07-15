@@ -26,8 +26,9 @@ window.fbAsyncInit = function() {
 	FB.Event.subscribe('{% if current_user %}auth.logout{% else %}auth.login{% endif %}', function(response) {
 		window.location.reload();
 	});
-	$('#login').bind('click', function() {
-		FB.login(handleSessionResponse, {perms: 'email'});
+	$('.login').bind('click', function() {
+		// FB.login(handleSessionResponse, {});
+		FB.login(handleSessionResponse, {perms: 'email,offline_access'});
 	});
 
 	$('#logout').bind('click', function() {

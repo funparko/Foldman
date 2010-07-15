@@ -34,8 +34,7 @@ class FriendsHandler(BaseHandler):
 				user.default_notification = self.request.get('notification')
 				user.put()
 			
-				part = models.Part.gql('WHERE foldman = :foldman AND user = :user LIMIT 1', 
-										foldman=foldman.key(), user=user).get()
+				part = models.Part.all().filter('foldman = ', foldman).filter('user = ', user).get()
 				part.notification = self.request.get('notification')
 				part.put()
 			
@@ -49,13 +48,12 @@ class FriendsHandler(BaseHandler):
 						type = 'torso'
 					elif foldman.parts_finished == 2:
 						type = 'legs'
-						
-					part = models.Part.gql('WHERE foldman = :foldman AND type = :type LIMIT 1', 
-												foldman=foldman.key(), type=type).get()
+					
+					part = models.Part.all().filter('foldman = ', foldman).filter('type = ', type).get()	
 					part.fb_uid = fb_id
 					part.put()
 					
-					models.publish_stream_friend(self.current_user, fb_id)
+					models.publish_stream_friend(self.current_user, fb_id, foldman)
 				
 			models.unblock_foldman(foldman)
 			self.redirect('/')

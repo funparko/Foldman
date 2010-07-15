@@ -15,11 +15,16 @@ class UserHandler(BaseHandler):
 			user = User.get(key)
 		else:
 			user = self.current_user
+
 		if user:
-			template_values = {
-				'foldmen': models.get_users_foldmen(user, self.current_user),
-				'user': user
-			}
+			template_values = models.get_paginated_foldmen(self, user, self.current_user)
+			
+			if self.current_user.id == user.id:
+				for foldman in template_values['finished_foldmen']:
+					if self.current_user.id in foldman.not_viewed_fb_uids:
+						foldman.not_viewed = True
+
+			template_values['user'] = user
 			self.render(template_values, 'user.html')
 		else:
 			self.error(404)

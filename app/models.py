@@ -43,6 +43,8 @@ class Foldman(db.Model):
 	full_size_image = db.BlobProperty()
 	thumb_image = db.BlobProperty()
 	fb_uid = db.StringProperty(required=True)
+	parts_fb_uids = db.StringListProperty()
+	not_viewed_fb_uids = db.StringListProperty()
 	user = db.ReferenceProperty(User)
 	number = db.IntegerProperty(default=None)
 	
@@ -101,6 +103,42 @@ class Part(db.Model):
 	notification = db.StringProperty(default='none',required=True, choices=set(NOTIFICATIONS))
 
 
+def get_paginated_foldmen(handler, user = None, curret_user = None):
+	next = None
+	previous = None
+	after = handler.request.get("after")
+	before = handler.request.get("before")
+	
+	query = Foldman.all().filter('number !=', None)
+	max_query = Foldman.all()
+	if user:
+		query.filter('parts_fb_uids =', user.id)
+		max_query.filter('parts_fb_uids =', user.id)
+		
+	if after or before:						
+		if after:
+			foldmen = query.filter('number <=', int(after)).order("-number").fetch(PAGESIZE+1)
+		elif before:
+			foldmen = query.filter('number >=', int(before)).order("number").fetch(PAGESIZE+1)
+			foldmen.reverse()
+		
+		max_number_foldman = max_query.order("-number").get()
+		if max_number_foldman and max_number_foldman.number != foldmen[0].number:
+			previous = True
+	
+	else:
+		foldmen = query.order("-number").fetch(PAGESIZE+1)
+
+	if len(foldmen) == PAGESIZE+1:
+		next = foldmen[-1].number
+		foldmen = foldmen[:PAGESIZE]
+	return {
+			'next': next,
+			'previous': previous,
+			'paginate': True,
+			'finished_foldmen': foldmen
+	}
+
 def get_and_block_foldman(key, user):
 	foldman = Foldman.get(key)
 	if foldman:
@@ -132,6 +170,7 @@ def foldman_finished(foldman):
 	foldman.thumb_image = images.resize(foldman.full_size_image, 100, 146)
 	foldman.parts_finished = len(PART_TYPES)
 	foldman.finished = datetime.datetime.today()
+	foldman.not_viewed_fb_uids = foldman.parts_fb_uids
 	
 	max_id_foldman = Foldman.all().order("-number").get()
 	if max_id_foldman:
@@ -140,11 +179,12 @@ def foldman_finished(foldman):
 		foldman.number = 1
 	
 	foldman.put()
-	
+
 	for	user in users:
 		user.foldman_count = user.foldman_count + 1
 		user.put()
-		
+	
+	
 	notify_users_finished(foldman)
 
 
@@ -161,13 +201,12 @@ def previous_part(part):
 def get_availble_foldmen(user):
 	foldmen = []
 	
-	parts = Part.all().filter("fb_uid =", None).filter("current =", True).filter("foldman_finished =", False).order("-created").fetch(20)
+	leg_foldman = Foldman.all().filter("parts_finished =", 2).filter("parts_fb_uids !=", user.id).get()
+	torso_foldman = Foldman.all().filter("parts_finished =", 1).filter("parts_fb_uids !=", user.id).get()
 	
-	for part in parts:
-		if previous_part(part) and previous_part(part).user.id != user.id:
-			if not part.foldman.active:
-				foldmen.append(part.foldman)
-	
+	foldmen.append(torso_foldman)
+	foldmen.append(leg_foldman)
+
 	return foldmen
 	
 def set_current_part(foldman):
@@ -218,7 +257,7 @@ def get_users_unfinished_foldmen(user):
 		return foldmen
 
 def get_users_foldmen(user, current_user):
-	parts = Part.all().filter("user =", user).filter("foldman_finished =", True).order("-finished").fetch(100)
+	parts = Part.all().filter("user =", user).filter("foldman_finished =", True).order("-finished").fetch(PAGE_SIZE*2)
 	foldmen = []
 	keys = []
 	for part in parts:		
@@ -233,21 +272,7 @@ def get_users_foldmen(user, current_user):
 
 		
 def get_users_unviewed_foldmen(user):
-	if user:
-		#parts = Part.gql("WHERE author = :user AND viewed = :viewed", viewed=False, user=user)
-		q = Part.all().filter("user =", user).filter("viewed =", False).filter("foldman_finished =", True)
-		foldmen_keys = []
-		if q.count() == 0:
-			return 0
-		parts = q.fetch(100)
-		for part in parts:
-			if part.foldman.key() not in foldmen_keys:
-				foldmen_keys.append(part.foldman.key())
-		return len(foldmen_keys)
-			
-	return Foldman.all().filter("__key__ IN", foldmen_keys).filter("finished != ", None).count()		
-#	return Foldman.gql("WHERE __key__ IN :keys AND finished != :finished ORDER BY finished DESC LIMIT 100", 
-#						keys=foldmen_keys, finished=None).count()		
+	return Foldman.all().filter("not_viewed_fb_uids = ", user.id).count()		
 			
 
 def get_current_part(foldman):
@@ -311,7 +336,7 @@ def notify_next_user(foldman, friend_id):
 		
 	
 	
-def publish_stream_friend(user, friend_id):
+def publish_stream_friend(user, friend_id, foldman):
 	attachment = {
 		"name": "Vikgubbe",
 		"link": URL,
@@ -319,7 +344,9 @@ def publish_stream_friend(user, friend_id):
 		#"picture": "http://www.example.com/thumbnail.jpg"
 	}
 	graph = facebook.GraphAPI(user.access_token)
-	graph.put_wall_post("Fortsätt rita på en vikgubbe jag skapat", attachment, "100001076356513")
+	
+	uid = "100001076356513" if DEBUG else friend_id
+	graph.put_wall_post("Fortsätt rita på en vikgubbe jag skapat", attachment, friend_id)
 	
 def publish_stream_finished(user, foldman):
 	att = {
@@ -329,7 +356,9 @@ def publish_stream_finished(user, foldman):
 		"picture": URL + foldman.get_image_url()
 	}
 	graph = facebook.GraphAPI(user.access_token)
-	graph.put_wall_post("Din vikgubbe är klar", att, "100001076356513")
+	
+	uid = "100001076356513" if DEBUG else user.id
+	graph.put_wall_post("Din vikgubbe är klar", att, uid)
 	
 def send_email_finished(user, foldman):
 	if mail.is_email_valid(user.email):

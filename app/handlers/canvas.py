@@ -69,7 +69,11 @@ class CanvasHandler(BaseHandler):
 			part.current = False
 			part.put()
 			
+			if self.current_user.id not in foldman.parts_fb_uids:
+				foldman.parts_fb_uids.append(self.current_user.id)
+			
 			if part.type == "legs":
+				foldman.put()
 				models.foldman_finished(foldman)
 				#models.publish_stream_friend(foldman.user, foldman.user.id)
 				
@@ -81,6 +85,7 @@ class CanvasHandler(BaseHandler):
 				else:
 					foldman.parts_finished = 2
 				foldman.put()
+				
 				models.set_current_part(foldman)
 				if part.type == 'head' or  part.type == 'torso' :
 					self.redirect('/friends/' + str(foldman.key()))

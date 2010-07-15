@@ -1,22 +1,26 @@
 <div id="finished_foldmen">
-	<h2>Färdiga vikgubbar</h2>
 	<ul class="foldmen_list">
 		{% for foldman in finished_foldmen %}
 		<li>
 			<a href="{{ foldman.get_url }}">
 				<img src="{{ foldman.get_thumb_url }}" alt="Vikgubbe Nr. {{ foldman.number }}" width="{{ IMAGE_FOLDMAN.thumb_width }}" height="{{ IMAGE_FOLDMAN.thumb_height }}" />
-				Vikgubbe <strong>Nr. {{ foldman.number }}</strong>
-			</a>	
+				Vikgubbe <strong>Nr. {{ foldman.number }}</strong> 
+				{% if foldman.not_viewed  %}
+				<span class="new">Ny</span>
+				{% endif %}
+			</a>
 		</li>
 		{% endfor %}
 	</ul>
 	{% if paginate %}
-		{% if next %}
-		<a href="/foldman/list?after={{ next }}">Nästa</a>
-		{% endif %}
+	<p class="pagination">
 		{% if previous %}
-		<a href="/foldman/list?before={{ finished_foldmen.0.number }}">Föregående</a>
+		<a href="?before={{ finished_foldmen.0.number }}" class="previous">Föregående</a>
 		{% endif %}
+		{% if next %}
+		<a href="?after={{ next }}" class="next">Nästa</a>
+		{% endif %}
+	</p>
 	{% else %}
 	<p class="view_all"><a href="/foldman/list">Visa alla</a></p>
 	{% endif %}
