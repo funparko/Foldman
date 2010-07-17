@@ -2,6 +2,7 @@ from app.config.environment import *
 from app.config.config import *
 
 import app.lib.facebook as facebook
+from app.lib.facebook import GraphAPIError
 from google.appengine.ext import webapp
 from app.models import User
 import app.models as models
@@ -32,18 +33,12 @@ class BaseHandler(webapp.RequestHandler):
 				user = User.get_by_key_name(cookie["uid"])
 				if not user:
 					graph = facebook.GraphAPI(cookie["access_token"])
-					try:
-						profile = graph.get_object("me")
-					except GraphAPIError:
-						return None
-					except:
-						return None
-					
+					profile = graph.get_object("me")
 					user = models.User(key_name=str(profile["id"]),
 							id=str(profile["id"]),
 							name=profile["name"],
 							profile_url=profile["link"],
-							email=profile["email"],
+							email= profile["email"] if "email" in profile else None,
 							access_token=cookie["access_token"])
 					user.put()
 				elif user.access_token != cookie["access_token"]:

@@ -44,9 +44,11 @@
 	
 </div>
 
-{% if availble_foldmen %}
+
 <nav id="choose_availble" class="holder">
+	
 	<h2>Forsätt på en påbörjad gubbe</h2>
+	{% if availble_foldmen %}
 	<p>Välj en av vikgubbarna nedan för att fortsätta på en påbörjad.</p>
 	<ul class="choose_list">
 	{% for foldman in availble_foldmen %}
@@ -64,8 +66,11 @@
 	</li>
 	{% endfor %}
 	</ul>
+	{% else %}
+	<p>Det finns inga vikgubbar att fortsätta på. Klick på Starta en ny vikgubbe!
+	{% endif %}
 </nav>
-{% endif %}
+
 
 {% else %}
 <div class="holder">
@@ -95,6 +100,7 @@
 
 {% block sub_content %}
 <section class="content">
+	<h2>Färdiga vikgubbar</h2>
 {% include "includes/foldmen_list.html" %}
 </section>
 {% endblock %}

@@ -35,6 +35,35 @@ indexes:
 
 - kind: Foldman
   properties:
+  - name: active
+  - name: parts_finished
+  - name: parts_finished
+  - name: public
+  - name: last_part_fb_uid
+
+- kind: Foldman
+  properties:
+  - name: active
+  - name: parts_finished
+  - name: public
+  - name: fb_uid
+
+- kind: Foldman
+  properties:
+  - name: active
+  - name: parts_finished
+  - name: public
+  - name: last_part_fb_uid
+
+- kind: Foldman
+  properties:
+  - name: active
+  - name: parts_finished
+  - name: public
+  - name: parts_fb_uids
+
+- kind: Foldman
+  properties:
   - name: key
   - name: finished
     direction: desc
@@ -76,13 +105,6 @@ indexes:
   properties:
   - name: author
   - name: foldman_finished
-  - name: finished
-    direction: desc
-
-- kind: Part
-  properties:
-  - name: current
-  - name: fb_id
   - name: finished
     direction: desc
 

@@ -53,7 +53,6 @@ class CanvasHandler(BaseHandler):
 				self.redirect('/')
 				return
 			
-			
 			part.finished = datetime.datetime.today()
 			part.user = self.current_user
 			part.fb_uid = self.current_user.id
@@ -71,6 +70,8 @@ class CanvasHandler(BaseHandler):
 			
 			if self.current_user.id not in foldman.parts_fb_uids:
 				foldman.parts_fb_uids.append(self.current_user.id)
+				
+			foldman.last_part_fb_uid = self.current_user.id
 			
 			if part.type == "legs":
 				foldman.put()
@@ -78,8 +79,7 @@ class CanvasHandler(BaseHandler):
 				#models.publish_stream_friend(foldman.user, foldman.user.id)
 				
 				self.redirect(foldman.get_url())
-				return
-			else:
+			elif part.type == 'head' or part.type == 'torso':
 				if part.type == 'head':
 					foldman.parts_finished = 1
 				else:
@@ -87,11 +87,11 @@ class CanvasHandler(BaseHandler):
 				foldman.put()
 				
 				models.set_current_part(foldman)
-				if part.type == 'head' or  part.type == 'torso' :
-					self.redirect('/friends/' + str(foldman.key()))
-				else:
-					self.redirect('/')
-				return
+				self.redirect('/friends/' + str(foldman.key()))
+
+			else:
+				self.redirect('/')
+			return
 				
 		else:
 			self.response.set_status(404, 'Not Found')

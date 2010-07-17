@@ -28,7 +28,7 @@ window.fbAsyncInit = function() {
 	});
 	$('.login').bind('click', function() {
 		// FB.login(handleSessionResponse, {});
-		FB.login(handleSessionResponse, {perms: 'email,offline_access'});
+		FB.login(handleSessionResponse, {perms: 'email,offline_access,publish_stream'});
 	});
 
 	$('#logout').bind('click', function() {

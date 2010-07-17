@@ -9,6 +9,7 @@ import app.lib.facebook as facebook
 from google.appengine.api import images
 from google.appengine.ext import db
 from google.appengine.api import mail
+from google.appengine.api.urlfetch import DownloadError 
 
 from app.config.config import *
 from app.config.environment import *
@@ -42,11 +43,15 @@ class Foldman(db.Model):
 	activated = db.DateTimeProperty(default=None)
 	full_size_image = db.BlobProperty()
 	thumb_image = db.BlobProperty()
+	
 	fb_uid = db.StringProperty(required=True)
 	parts_fb_uids = db.StringListProperty()
+	last_part_fb_uid = db.StringProperty()
 	not_viewed_fb_uids = db.StringListProperty()
+	
 	user = db.ReferenceProperty(User)
 	number = db.IntegerProperty(default=None)
+	public = db.BooleanProperty(default=True)
 	
 	
 	@property
@@ -156,12 +161,9 @@ def foldman_finished(foldman):
 	inputs = []
 	users = []
 	for	type in PART_TYPES:
-		part = Part.gql('WHERE foldman = :foldman AND type = :type LIMIT 1', foldman=foldman.key(), type=type).get()		
+		part = Part.all().filter('foldman =', foldman).filter('type =', type).get()		
 		inputs.append((part.full_size_image, 0, y, 1.0, images.TOP_LEFT))		
 		y = y + IMAGE_PART_HEIGHT - IMAGE_FOLDING
-		
-		part.foldman_finished = True
-		part.put()
 		
 		if part.user not in users:
 			users.append(part.user)
@@ -173,13 +175,17 @@ def foldman_finished(foldman):
 	foldman.not_viewed_fb_uids = foldman.parts_fb_uids
 	
 	max_id_foldman = Foldman.all().order("-number").get()
-	if max_id_foldman:
+	if max_id_foldman and max_id_foldman.number:
 		foldman.number = (max_id_foldman.number+1)
 	else:
 		foldman.number = 1
 	
 	foldman.put()
-
+	for	type in PART_TYPES:
+		part = Part.all().filter('foldman =', foldman).filter('type =', type).get()		
+		part.foldman_finished = True
+		part.put()
+		
 	for	user in users:
 		user.foldman_count = user.foldman_count + 1
 		user.put()
@@ -200,12 +206,15 @@ def previous_part(part):
 	
 def get_availble_foldmen(user):
 	foldmen = []
-	
-	leg_foldman = Foldman.all().filter("parts_finished =", 2).filter("parts_fb_uids !=", user.id).get()
-	torso_foldman = Foldman.all().filter("parts_finished =", 1).filter("parts_fb_uids !=", user.id).get()
-	
-	foldmen.append(torso_foldman)
-	foldmen.append(leg_foldman)
+	query = Foldman.all().filter("last_part_fb_uid !=", user.id).filter("active =", False).filter("public =", True);
+
+	torso_foldman = query.filter("parts_finished =", 1).get()
+	leg_foldman = query.filter("parts_finished =", 2).get()	
+	 
+	if torso_foldman:
+		foldmen.append(torso_foldman)
+	if leg_foldman:
+		foldmen.append(leg_foldman) 
 
 	return foldmen
 	
@@ -343,10 +352,14 @@ def publish_stream_friend(user, friend_id, foldman):
 		"description": "Följ länken för att rita vikgubben"
 		#"picture": "http://www.example.com/thumbnail.jpg"
 	}
-	graph = facebook.GraphAPI(user.access_token)
-	
 	uid = "100001076356513" if DEBUG else friend_id
-	graph.put_wall_post("Fortsätt rita på en vikgubbe jag skapat", attachment, friend_id)
+	
+	try:
+		graph = facebook.GraphAPI(user.access_token)
+		graph.put_wall_post("Fortsätt rita på en vikgubbe jag skapat", attachment, uid)
+		return True
+	except DownloadError:
+		return False
 	
 def publish_stream_finished(user, foldman):
 	att = {
@@ -355,10 +368,15 @@ def publish_stream_finished(user, foldman):
 		"description": "Följ länken för att se vikgubben",
 		"picture": URL + foldman.get_image_url()
 	}
-	graph = facebook.GraphAPI(user.access_token)
-	
 	uid = "100001076356513" if DEBUG else user.id
-	graph.put_wall_post("Din vikgubbe är klar", att, uid)
+
+	try:
+		graph = facebook.GraphAPI(user.access_token)
+		graph.put_wall_post("Vikgubben jag varit och ritat är klar", att, uid)
+		return True
+	except DownloadError:
+		return False
+	
 	
 def send_email_finished(user, foldman):
 	if mail.is_email_valid(user.email):

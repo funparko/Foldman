@@ -87,7 +87,7 @@ var Friends = {
 				}
 				checkHasPermission(perms);
 			}
-		})
+		});
 	}
 }
 

@@ -53,6 +53,9 @@ class FriendsHandler(BaseHandler):
 					part.fb_uid = fb_id
 					part.put()
 					
+					foldman.public = False
+					foldman.put()
+					
 					models.publish_stream_friend(self.current_user, fb_id, foldman)
 				
 			models.unblock_foldman(foldman)
